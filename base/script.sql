@@ -10,9 +10,15 @@ ALTER DATABASE grossi OWNER TO m1;
 
 CREATE TABLE Categorie (
                            id SERIAL PRIMARY KEY,
-                           nom VARCHAR(100) NOT NULL,
-                           description TEXT
+                           nom VARCHAR(100) NOT NULL
 );
+
+CREATE TABLE CategorieDescription (
+                                      id SERIAL PRIMARY KEY,
+                                      categorie_id INT REFERENCES Categorie(id) ON DELETE CASCADE,
+                                      description TEXT NOT NULL
+);
+
 
 CREATE TABLE Unite (
                        id SERIAL PRIMARY KEY,
@@ -64,7 +70,7 @@ CREATE TABLE RoleUtilisateur (
 CREATE TABLE Produit (
                          id SERIAL PRIMARY KEY,
                          nom VARCHAR(150) NOT NULL,
-                         categorie_id INT REFERENCES Categorie(id) ON DELETE SET NULL,
+                         categorie_id INT REFERENCES CategorieDescription(id) ON DELETE SET NULL,
                          unite_id INT REFERENCES Unite(id) ON DELETE SET NULL,
                          prix_actuel NUMERIC(12,2) NOT NULL,
                          actif BOOLEAN DEFAULT TRUE,
