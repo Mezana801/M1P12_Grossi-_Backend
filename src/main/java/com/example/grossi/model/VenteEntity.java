@@ -1,13 +1,23 @@
 package com.example.grossi.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "vente", schema = "public", catalog = "grossi")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class VenteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -26,7 +36,11 @@ public class VenteEntity {
     @Column(name = "statut_paiement_id")
     private Integer statutPaiementId;
 
-    public int getId() {
+
+    @OneToMany(mappedBy = "venteId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DetailventeEntity> detailsVente = new ArrayList<>();
+
+  /*  public int getId() {
         return id;
     }
 
@@ -64,7 +78,7 @@ public class VenteEntity {
 
     public void setStatutPaiementId(Integer statutPaiementId) {
         this.statutPaiementId = statutPaiementId;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

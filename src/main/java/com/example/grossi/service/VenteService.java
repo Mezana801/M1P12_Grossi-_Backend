@@ -3,12 +3,17 @@ package com.example.grossi.service;
 import com.example.grossi.dto.VenteRequest;
 import com.example.grossi.model.*;
 import com.example.grossi.repository.*;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -87,19 +92,56 @@ public class VenteService {
         }
 
         // Générer la facture PDF
-        FactureEntity facture = genererFacturePDF(vente);
-        factureRepository.save(facture);
+      //  FactureEntity facture = genererFacturePDF(vente);
+        // factureRepository.save(facture);
 
         return vente;
     }
 
-    private FactureEntity genererFacturePDF(VenteEntity vente) {
-        // Ici tu mets ton code pour générer un PDF et retourner l'entité Facture
-        FactureEntity facture = new FactureEntity();
-        facture.setVenteId(vente.getId());
-        facture.setNumeroFacture("FAC-" + vente.getId());
-        facture.setPdfPath("/factures/fac-" + vente.getId() + ".pdf");
-        return facture;
+    public FactureEntity genererFacturePDF(VenteEntity vente) {
+        try {
+            // Créer le chemin du fichier
+            String dossierFactures = "C:/factures"; // ou "./factures" relatif à ton projet
+            File dir = new File(dossierFactures);
+            if (!dir.exists()) dir.mkdirs();
+
+            String nomFichier = "FAC-" + vente.getId() + ".pdf";
+            String cheminComplet = dossierFactures + "/" + nomFichier;
+
+            // Créer PDF
+            PdfWriter writer = new PdfWriter(cheminComplet);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            // Ajouter contenu
+            document.add(new Paragraph("Facture n°: FAC-" + vente.getId()));
+            document.add(new Paragraph("Client ID: " + vente.getClientId()));
+            document.add(new Paragraph("Montant total: " + vente.getMontantTotal()));
+            document.add(new Paragraph("Date: " + vente.getDateVente()));
+
+            document.add(new Paragraph("\nDétails de la vente:"));
+            for (DetailventeEntity detail : vente.getDetailsVente()) {
+                document.add(new Paragraph(
+                        "Produit ID: " + detail.getProduitId() +
+                                ", Quantité: " + detail.getQuantite() +
+                                ", Prix unitaire: " + detail.getPrixUnitaire() +
+                                ", Sous-total: " + detail.getSousTotal()
+                ));
+            }
+
+            document.close();
+
+            // Créer l'entité Facture
+            FactureEntity facture = new FactureEntity();
+            facture.setVenteId(vente.getId());
+            facture.setNumeroFacture(nomFichier.replace(".pdf", ""));
+            facture.setPdfPath(cheminComplet);
+
+            return facture;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de la génération du PDF: " + e.getMessage(), e);
+        }
     }
 }
 
