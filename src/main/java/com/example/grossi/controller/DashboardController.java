@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.grossi.dto.DashboardKpiDto;
 import com.example.grossi.service.DashboardService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/dashboard")
 public class DashboardController {
