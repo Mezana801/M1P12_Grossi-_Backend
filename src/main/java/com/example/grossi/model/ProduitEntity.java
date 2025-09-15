@@ -34,6 +34,8 @@ public class ProduitEntity {
     @Basic
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+    @Column(name = "image")
+    private String image;
 
     public int getId() {
         return id;
@@ -49,6 +51,14 @@ public class ProduitEntity {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+     public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getCategorieId() {
