@@ -1,6 +1,7 @@
 package com.example.grossi.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -8,6 +9,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "stock", schema = "public", catalog = "grossi")
+@Data
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class StockEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -37,6 +44,32 @@ public class StockEntity {
     @Basic
     @Column(name = "notes")
     private String notes;
+
+
+
+    // Relation vers Produit
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "produit_id", insertable = false, updatable = false) // correspond à produitId dans la table stock
+    private ProduitEntity produit;
+
+
+    public ProduitEntity getProduit() {
+        return produit;
+    }
+
+    public void setProduit(ProduitEntity produit) {
+        this.produit = produit;
+    }
+    public BigDecimal getStockDisponible() {
+        return stockDisponible;
+    }
+
+    public void setStockDisponible(BigDecimal stockDisponible) {
+        this.stockDisponible = stockDisponible;
+    }
+
+    @Transient
+    private BigDecimal stockDisponible;
 
     public int getId() {
         return id;

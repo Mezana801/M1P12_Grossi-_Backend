@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Grossi+</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* Inputs et selects uniformes */
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;        /* Tous prennent 100% de la largeur du container */
+      max-width: 100%;    /* Empêche de dépasser le container */
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #dcdde1;
+      font-size: 14px;
+      box-sizing: border-box;  /* padding inclus dans la largeur */
+      transition: 0.2s all;
+    }
+
+    /* Focus uniforme */
+    input:focus, select:focus {
+      border-color: #0097e6;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 151, 230, 0.3);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f6fa;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header type Amazon */
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f8f9fa;
+      cursor: pointer;
+    }
+
+    .search-bar {
+      flex: 1;
+      margin: 0 20px;
+      display: flex;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 4px 0 0 4px;
+      border: none;
+      font-size: 14px;
+    }
+
+    .search-bar button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      background-color: #71e4ff;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 14px;
+    }
+
+    .user-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .container {
+      flex: 1;
+      max-width: 600px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+      color: #2f3640;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #dcdde1;
+      font-size: 14px;
+      transition: 0.2s all;
+    }
+
+    select:focus, input:focus {
+      border-color: #0097e6;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 151, 230, 0.3);
+    }
+
+    button.submit-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s all;
+    }
+
+    button.submit-btn:hover {
+      background-color: #0097e6;
+    }
+
+    /* Liste des ventes */
+    #ventesList {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .vente-card {
+      background-color: #f1f2f6;
+      border-radius: 10px;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.2s all;
+    }
+
+    .main {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+
+
+    .table-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      flex: 2;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #007bff;
+      color: white;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    #searchStock {
+      width: 50%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .vente-info span {
+      font-size: 14px;
+      color: #2f3640;
+    }
+
+    footer {
+      background-color: #007bff;;
+      color: #dcdde1;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 14px;
+      margin-top: auto;
+      box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Grossi+</div>
+  <div class="search-bar">
+    <input type="text" placeholder="Rechercher un produit...">
+    <button>🔍</button>
+  </div>
+  <div class="user-menu">
+    <a href="#">Connexion</a>
+    <a href="#">Panier</a>
+    <a href="#">Aide</a>
+  </div>
+</header>
+
+
+
+<div class="main">
+<div class="container">
+  <h2>Enregistrer une vente</h2>
+
+  <label for="clientId">Client :</label>
+  <select id="clientId"></select>
+
+  <label for="produitId">Produit :</label>
+  <select id="produitId"></select>
+
+  <label for="quantite">Quantité :</label>
+  <input type="number" id="quantite" value="1">
+
+  <label for="prixUnitaire">Prix Unitaire :</label>
+  <input type="number" id="prixUnitaire" value="0" readonly>
+
+  <button id="submitBtn" class="submit-btn">Enregistrer la vente</button>
+
+  <div id="ventesList">
+    <!-- Les ventes enregistrées apparaîtront ici sous forme de cartes -->
+  </div>
+
+</div>
+
+  <!-- Tableau stocks -->
+  <div class="table-container">
+    <h2>Stocks des produits</h2>
+    <input type="text" id="searchStock" placeholder="Rechercher par nom de produit...">
+
+    <table id="stocksTable">
+      <thead>
+      <tr>
+        <th>Nom Produit</th>
+        <th>Quantité en stock</th>
+        <th>Prix actuel (Ar)</th>
+        <th>Stock prédit J+1</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Les lignes seront injectées par JS -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 Grossi+. Tous droits réservés.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="renderer.js"></script>
+</body>
+</html>

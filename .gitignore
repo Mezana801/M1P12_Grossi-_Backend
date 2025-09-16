@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+grossiste-client/node_modules/
+grossiste-client/dist/
+node_modules/

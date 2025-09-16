@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface StockEntityRepository extends JpaRepository<StockEntity, Integer> {
 
@@ -23,4 +24,7 @@ public interface StockEntityRepository extends JpaRepository<StockEntity, Intege
        """)
     BigDecimal getStockDisponible(@Param("produitId") Long produitId);
     ;
+
+    @Query("SELECT s FROM StockEntity s JOIN TypemouvementstockEntity tm ON s.typeMouvementId = tm.id JOIN FETCH s.produit")
+    List<StockEntity> findAllWithTypeMouvement();
 }

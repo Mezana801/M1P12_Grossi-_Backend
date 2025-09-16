@@ -40,7 +40,16 @@ public class VenteEntity {
     @OneToMany(mappedBy = "venteId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DetailventeEntity> detailsVente = new ArrayList<>();
 
-  /*  public int getId() {
+
+    public List<DetailventeEntity> getDetailsVente() {
+        return detailsVente;
+    }
+
+    public void setDetailsVente(List<DetailventeEntity> detailsVente) {
+        this.detailsVente = detailsVente;
+    }
+
+    public int getId() {
         return id;
     }
 
@@ -78,7 +87,7 @@ public class VenteEntity {
 
     public void setStatutPaiementId(Integer statutPaiementId) {
         this.statutPaiementId = statutPaiementId;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
