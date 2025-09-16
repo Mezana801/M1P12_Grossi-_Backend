@@ -1,0 +1,39 @@
+{
+  "name": "grossiste-client",
+  "version": "1.0.0",
+  "description": "Application client lourd pour la gestion des ventes",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build-win": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^26.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.grossiste.client",
+    "productName": "GrossisteClient",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "electron-updater": "^6.6.2",
+    "sweetalert2": "^11.23.0"
+  }
+}
