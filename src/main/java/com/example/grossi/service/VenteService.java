@@ -69,13 +69,12 @@ public class VenteService {
             }
 
             // Décrémenter directement la quantité dans le produit
-            produit.setPrixActuel(produit.getPrixActuel()); // reste le même
+            produit.setPrixActuel(produit.getPrixActuel());
             produitRepository.save(produit);
 
-            // Créer le mouvement de sortie
             StockEntity mouvementSortie = new StockEntity();
             mouvementSortie.setProduitId(produit.getId());
-            mouvementSortie.setTypeMouvementId(2); // SORTIE
+            mouvementSortie.setTypeMouvementId(2);
             mouvementSortie.setQuantite(d.getQuantite());
             mouvementSortie.setPrixUnitaire(d.getPrixUnitaire());
             mouvementSortie.setDateMouvement(new Timestamp(System.currentTimeMillis()));
